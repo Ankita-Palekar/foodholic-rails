@@ -6,6 +6,6 @@ class Category < ActiveRecord::Base
 	 
 	def check_admin
 		user = User.find_by_id(user_id)
-		errors.add(:base, "user is not admin") if user.admin == 'f'
+		user.valid ? errors.add(:base, "user is not admin") if user.admin == 'f' :  errors.add(:base, "Invalid user")
 	end
 end
