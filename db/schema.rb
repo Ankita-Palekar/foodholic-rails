@@ -11,10 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150720132600) do
+ActiveRecord::Schema.define(:version => 20150721050513) do
 
   create_table "categories", :force => true do |t|
-    t.string "name"
+    t.string  "name"
+    t.integer "user_id"
   end
 
   create_table "ingredients", :force => true do |t|
@@ -36,14 +37,16 @@ ActiveRecord::Schema.define(:version => 20150720132600) do
   end
 
   add_index "ratings", ["recipe_id"], :name => "index_ratings_on_recipie_id"
+  add_index "ratings", ["user_id", "recipe_id"], :name => "index_ratings_on_user_id_and_recipe_id", :unique => true
   add_index "ratings", ["user_id"], :name => "index_ratings_on_user_id"
 
   create_table "recipes", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title",      :limit => nil
+    t.string   "title",       :limit => nil
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "method"
+    t.integer  "category_id"
   end
 
   add_index "recipes", ["user_id"], :name => "index_recipies_on_user_id"
